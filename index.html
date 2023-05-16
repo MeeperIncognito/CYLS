@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Your Liminal Space!</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 class="title">Create Your Liminal Space!</h1>
+
+  <div id="choose-space" class="section">
+    <h2 class="subtitle">Choose your space:</h2>
+
+    <div class="thumbnail-grid" id="thumbnail-grid">
+      <!-- Thumbnails will be added dynamically through JavaScript -->
+    </div>
+  </div>
+
+  <div id="choose-flavor" class="section hidden">
+    <h2 class="subtitle">Choose your flavor:</h2>
+
+    <h2 class="overlay-image">Loading...</h2>
+    
+    <div class="image-container">
+      <img id="chosen-image" src="" alt="Chosen Image">
+      <img id="edited-image" src="">
+    </div>
+      
+    <div class="wide-box">
+      <div class="scroll-container">
+          <!-- Scrollable content here -->
+          <img src="Images/Colors/Adorable.png" alt="Adorable" class="color-image">
+          <img src="Images/Colors/Adventure.png" alt="Adventure" class="color-image">
+          <img src="Images/Colors/Aesthetic.png" alt="Aesthetic" class="color-image">
+          <img src="Images/Colors/Beautiful.png" alt="Beautiful" class="color-image">
+          <img src="Images/Colors/Blissful.png" alt="Blissful" class="color-image">
+          <img src="Images/Colors/Calm.png" alt="Calm" class="color-image">
+          <img src="Images/Colors/Chilling.png" alt="Chilling" class="color-image">
+          <img src="Images/Colors/Cool.png" alt="Cool" class="color-image">
+          <img src="Images/Colors/Cozy.png" alt="Cozy" class="color-image">
+          <img src="Images/Colors/Creepy.png" alt="Creepy" class="color-image">
+          <img src="Images/Colors/Cute.png" alt="Cute" class="color-image">
+          <img src="Images/Colors/Eerie.png" alt="Eerie" class="color-image">
+          <img src="Images/Colors/Good.png" alt="Good" class="color-image">
+          <img src="Images/Colors/Happy.png" alt="Happy" class="color-image">
+          <img src="Images/Colors/Harmony.png" alt="Harmony" class="color-image">
+          <img src="Images/Colors/Liminal.png" alt="Liminal" class="color-image">
+          <img src="Images/Colors/Lone.png" alt="Lone" class="color-image">
+          <img src="Images/Colors/Love.png" alt="Love" class="color-image">
+          <img src="Images/Colors/Melancholy.png" alt="Melancholy" class="color-image">
+          <img src="Images/Colors/Menacing.png" alt="Menacing" class="color-image">
+          <img src="Images/Colors/Mood.png" alt="Mood" class="color-image">
+          <img src="Images/Colors/Nightmare.png" alt="Nightmare" class="color-image">
+          <img src="Images/Colors/Ominous.png" alt="Ominous" class="color-image">
+          <img src="Images/Colors/Passion.png" alt="Passion" class="color-image">
+          <img src="Images/Colors/Peaceful.png" alt="Peaceful" class="color-image">
+          <img src="Images/Colors/Pleasant.png" alt="Pleasant" class="color-image">
+          <img src="Images/Colors/Pleasure.png" alt="Pleasure" class="color-image">
+          <img src="Images/Colors/Relax.png" alt="Relax" class="color-image">
+          <img src="Images/Colors/Rest.png" alt="Rest" class="color-image">
+          <img src="Images/Colors/Romantic.png" alt="Romantic" class="color-image">
+          <img src="Images/Colors/Scary.png" alt="Scary" class="color-image">
+          <img src="Images/Colors/Somber.png" alt="Somber" class="color-image">
+          <img src="Images/Colors/Sorrow.png" alt="Sorrow" class="color-image">
+          <img src="Images/Colors/Spooky.png" alt="Spooky" class="color-image">
+          <img src="Images/Colors/Terrifying.png" alt="Terrifying" class="color-image">
+          <img src="Images/Colors/Threaten.png" alt="Threaten" class="color-image">
+          <img src="Images/Colors/Ugly.png" alt="Ugly" class="color-image">
+          <img src="Images/Colors/Vibe.png" alt="Vibe" class="color-image">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const colorImages = document.querySelectorAll('.color-image');
+    colorImages.forEach((image) => {
+      image.addEventListener('click', () => {
+        // Remove the 'selected' class from all color images
+        colorImages.forEach((img) => {
+          img.classList.remove('selected');
+        });
+
+        // Add the 'selected' class to the clicked color image
+        image.classList.add('selected');
+      });
+    });
+  </script>
+
+  <script src="node_modules/jimp/browser/lib/jimp.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const scrollContainer = document.querySelector('.scroll-container');
+    const chosenImage = document.getElementById('chosen-image');
+    const editedImage = document.getElementById('edited-image');
+    const emotions = ["Adorable", "Adventure", "Aesthetic", "Beautiful", "Blissful",
+                      "Calm", "Chilling", "Cool", "Cozy", "Creepy", "Cute", "Eerie",
+                      "Good", "Happy", "Harmony", "Liminal", "Lone", "Love", "Melancholy", 
+                      "Menacing", "Mood", "Nightmare", "Ominous", "Passion", "Peaceful",
+                      "Pleasant", "Pleasure", "Relax", "Rest", "Romantic", "Scary", "Somber",
+                      "Sorrow", "Spooky", "Terrifying", "Threaten", "Ugly", "Vibe"];
+    const hexColors = [
+      [[54, 26, 60], [38, 26, 88], [39, 29, 23]],
+      [[90, 4, 19], [169, 5, 46], [205, 17, 74]],
+      [[32, 16, 56], [32, 21, 76], [30, 29, 30]],
+      [[84, 25, 51], [120, 19, 28], [75, 35, 78]],
+      [[26, 15, 78], [17, 22, 53], [20, 43, 19]],
+      [[223, 58, 59], [227, 60, 78], [216, 49, 18]],
+      [[17, 7, 21], [30, 9, 45], [108, 8, 76]],
+      [[29, 17, 75], [73, 7, 51], [67, 11, 30]],
+      [[24, 60, 19], [30, 34, 42], [36, 21, 74]],
+      [[207, 12, 71], [180, 3, 11], [140, 2, 38]],
+      [[39, 23, 56], [36, 26, 79], [32, 23, 31]],
+      [[210, 47, 74], [211, 27, 66], [202, 15, 53]],
+      [[28, 15, 54], [29, 24, 25], [30, 20, 96]],
+      [[207, 82, 19], [205, 36, 82], [205, 35, 50]],
+      [[20, 5, 12], [30, 14, 40], [37, 24, 81]],
+      [[51, 33, 37], [71, 22, 10], [41, 40, 71]],
+      [[350, 6, 20], [26, 16, 49], [190, 10, 77]],
+      [[50, 9, 60], [83, 17, 27], [204, 23, 87]],
+      [[47, 9, 19], [50, 10, 12], [35, 8, 48]],
+      [[45, 12, 73], [189, 8, 47], [201, 11, 26]],
+      [[40, 23, 13], [31, 27, 34], [28, 24, 55]],
+      [[30, 50, 28], [27, 62, 16], [33, 38, 47]],
+      [[45, 17, 40], [47, 27, 20], [48, 28, 66]],
+      [[187, 26, 34], [55, 10, 75], [206, 79, 59]],
+      [[180, 1, 17], [71, 4, 51], [38, 25, 83]],
+      [[192, 67, 68], [162, 33, 39], [158, 69, 15]],
+      [[210, 48, 68], [214, 56, 27], [216, 25, 44]],
+      [[199, 18, 79], [189, 14, 10], [201, 13, 46]],
+      [[203, 22, 16], [195, 6, 39], [33, 67, 60]],
+      [[38, 36, 17], [38, 22, 49], [47, 13, 80]],
+      [[32, 27, 10], [36, 13, 40], [47, 9, 80]],
+      [[134, 32, 8], [71, 61, 27], [30, 35, 64]],
+      [[32, 10, 67], [24, 12, 92], [15, 26, 28]],
+      [[0, 9, 6], [21, 12, 28], [40, 4, 86]],
+      [[240, 6, 45], [230, 33, 79], [236, 23, 14]],
+      [[209, 12, 41], [213, 14, 15], [135, 3, 71]],
+      [[64, 17, 18], [51, 17, 46], [46, 21, 81]],
+      [[188, 28, 10], [187, 41, 35], [183, 53, 76]]
+    ];
+
+    scrollContainer.addEventListener('click', (event) => {
+
+      const clickedElement = event.target;
+      const overlayImage = document.querySelector('.overlay-image');
+
+      if (clickedElement.classList.contains('color-image')) {
+        // Toggle the visibility of the overlay image
+        overlayImage.style.visibility = 'visible';
+      };
+
+      console.log("Clicked");
+
+      let colorImageSrc = clickedElement.getAttribute('src');
+      let colorImageName = colorImageSrc.substring(colorImageSrc.lastIndexOf('/') + 1, colorImageSrc.lastIndexOf('.'));
+
+      const renderedImageSrc = chosenImage.getAttribute('src');
+      const redMask = renderedImageSrc.replace('Renders', 'Masks/red');
+      const greenMask = renderedImageSrc.replace('Renders', 'Masks/green');
+      const blueMask = renderedImageSrc.replace('Renders', 'Masks/blue');
+
+      // Finds the index of the chosen colors
+      const index = emotions.indexOf(colorImageName);
+      console.log("Index:", index);
+
+      // Gets the tuple from hexColors (Green, Red, Blue) - that's the order for most accurate results
+      const chosenColors = hexColors[index];
+      console.log("Colors:", chosenColors);
+
+      Jimp.read(renderedImageSrc)
+        .then((renderedImage) => Jimp.read(redMask)
+          .then((redMaskImage) => Jimp.read(greenMask)
+            .then((greenMaskImage) => Jimp.read(blueMask)
+              .then((blueMaskImage) => {
+                // Mask the rendered image with the red mask
+                const redPart = renderedImage.clone().mask(redMaskImage, 0, 0);
+                const greenPart = renderedImage.clone().mask(greenMaskImage, 0, 0);
+                const bluePart = renderedImage.clone().mask(blueMaskImage, 0, 0);
+
+                const partsList = [redPart, greenPart, bluePart];
+
+                function rgbToHsl(r, g, b) {
+                  r /= 255;
+                  g /= 255;
+                  b /= 255;
+
+                  const max = Math.max(r, g, b);
+                  const min = Math.min(r, g, b);
+                  let h, s, l;
+
+                  if (max === min) {
+                    h = 0;
+                  } else if (max === r) {
+                    h = ((g - b) / (max - min)) % 6;
+                  } else if (max === g) {
+                    h = (b - r) / (max - min) + 2;
+                  } else if (max === b) {
+                    h = (r - g) / (max - min) + 4;
+                  }
+
+                  h = Math.round(h * 60);
+                  if (h < 0) h += 360;
+
+                  l = (max + min) / 2;
+
+                  if (max === min) {
+                    s = 0;
+                  } else if (l <= 0.5) {
+                    s = (max - min) / (2 * l);
+                  } else {
+                    s = (max - min) / (2 - 2 * l);
+                  }
+
+                  s = Math.round(s * 100);
+                  l = Math.round(l * 100);
+
+                  return [h, s, l];
+                };
+
+                function hslToRgb(h, s, l) {
+                  h /= 360;
+                  s /= 100;
+                  l /= 100;
+
+                  let r, g, b;
+
+                  if (s === 0) {
+                    r = g = b = l; // Achromatic (gray) color
+                  } else {
+                    const hue2rgb = (p, q, t) => {
+                      if (t < 0) t += 1;
+                      if (t > 1) t -= 1;
+                      if (t < 1 / 6) return p + (q - p) * 6 * t;
+                      if (t < 1 / 2) return q;
+                      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                      return p;
+                    };
+
+                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                    const p = 2 * l - q;
+
+                    r = hue2rgb(p, q, h + 1 / 3);
+                    g = hue2rgb(p, q, h);
+                    b = hue2rgb(p, q, h - 1 / 3);
+                  }
+
+                  r = Math.round(r * 255);
+                  g = Math.round(g * 255);
+                  b = Math.round(b * 255);
+
+                  return [r, g, b];
+                };
+
+                var number = -1;
+                for (const item of partsList) {
+                  number += 1;
+                  console.log("Number:", number)
+
+                  // Iterate over each pixel of the image
+                  item.scan(0, 0, item.bitmap.width, item.bitmap.height, (x, y, idx) => {
+                    // Get the RGB values of the pixel
+                    const r = item.bitmap.data[idx];
+                    const g = item.bitmap.data[idx + 1];
+                    const b = item.bitmap.data[idx + 2];
+
+                    // Check if the pixel is pure black
+                    if (r === 0 && g === 0 && b === 0) {
+                      // Set the alpha value of the pixel to 0 (fully transparent)
+                      item.bitmap.data[idx + 3] = 0;
+                    } else {
+                      // Calculate the overlay effect
+                      const hslOriginal = rgbToHsl(r, g, b);
+
+                      // Apply the overlay effect by blending the original pixel with the overlay color
+                      const overlayHue = chosenColors[number][0];
+                      const overlaySat = chosenColors[number][1];
+                      const overlayLight = chosenColors[number][2];
+
+                      // Assume the originalHSL is an array representing the HSL values of the original pixel color
+                      const blendedHue = overlayHue; // Use the overlay hue as the blended hue
+                      const blendedSaturation = overlaySat; // Use the overlay saturation as the blended saturation
+                      // const blendedLightness = (overlayLight > hslOriginal[2]) ? overlayLight : hslOriginal[2];
+                      const blendedLightness = hslOriginal[2];
+
+                      
+                      const overlayRGB = hslToRgb(
+                        blendedHue,
+                        blendedSaturation,
+                        blendedLightness
+                      );
+
+                      // Set the new RGB values to the pixel
+                      item.bitmap.data[idx] = Math.round(overlayRGB[0]);
+                      item.bitmap.data[idx + 1] = Math.round(overlayRGB[1]);
+                      item.bitmap.data[idx + 2] = Math.round(overlayRGB[2]);
+
+                    }
+                  });
+                };
+
+
+                // Create a composite image from one base image and 3 channel images
+                let compositeImage = renderedImage;
+                compositeImage = compositeImage.composite(partsList[0], 0, 0);
+                compositeImage = compositeImage.composite(partsList[1], 0, 0);
+                compositeImage = compositeImage.composite(partsList[2], 0, 0);
+
+                // Hide the element by setting its display property to "none"
+                chosenImage.style.display = "none";
+
+                // Get the modified image as a Base64 string
+                compositeImage.getBase64Async(jimp.MIME_JPEG).then((modifiedImageBase64) => {
+                  // Set the modified image as the source of the chosen-image element
+                  editedImage.src = modifiedImageBase64;
+                  console.log("Done!");
+                  // hide loading animation
+                  overlayImage.style.visibility = 'hidden';
+                });
+
+          })))
+        )});
+
+    });
+  </script>
+  <script src="script.js"></script>
+
+</body>
+</html>
